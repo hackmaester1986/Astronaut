@@ -1,0 +1,130 @@
+  .container { 
+    max-width: 980px; 
+    margin: 24px auto; 
+    padding: 16px; 
+  }
+  .header { 
+    display:flex; 
+    align-items:flex-end; 
+    justify-content:space-between; 
+    gap:16px; 
+    margin-bottom:16px; 
+  }
+  h1 { 
+    margin:0; 
+    font-size:1.5rem; 
+  }
+  .picker { 
+    display:flex; 
+    flex-direction:column; 
+    gap:6px; 
+    min-width:260px; 
+  }
+  select {
+    padding:10px 12px; 
+    border:1px solid #d0d7de; 
+    border-radius:12px; 
+    background:#fff;
+    font-size:14px; 
+    outline:none;
+  }
+  select:focus { 
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15); 
+    border-color:#6366f1; 
+  }
+
+  .state { 
+    padding:12px 14px; 
+    border-radius:10px; 
+    background:#f6f8fa; 
+    color:#57606a; 
+    margin-top:8px; 
+  }
+  .state.error { 
+    background:#fee2e2; 
+    color:#991b1b; 
+  }
+
+  .profile-card {
+    border:1px solid #e5e7eb; 
+    border-radius:16px; 
+    padding:16px; 
+    margin:16px 0; 
+    background:#fff;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  }
+  .profile-top { 
+    display:flex; 
+    align-items:baseline; 
+    justify-content:space-between;
+    gap:12px; 
+  }
+  .name { 
+    margin:0; 
+    font-size:1.25rem; 
+  }
+  .subtitle { 
+    color:#374151; 
+    font-weight:500; 
+  }
+  .badge {
+    display:inline-block; 
+    margin-left:8px; 
+    padding:4px 10px; 
+    border-radius:999px;
+    background:#eef2ff; 
+    color:#3730a3; 
+    font-size:12px; 
+    font-weight:600; 
+    vertical-align:middle;
+  }
+  .meta { 
+    display:flex; 
+    gap:24px; 
+    flex-wrap:wrap; 
+    margin-top:8px; 
+    color:#4b5563; 
+  }
+  .meta span { 
+    color:#6b7280; 
+  }
+
+  .table-wrap { 
+    overflow:auto; 
+    border:1px solid #e5e7eb; 
+    border-radius:16px; 
+    background:#fff; 
+  }
+  table { 
+    width:100%; 
+    border-collapse:separate; 
+    border-spacing:0; 
+  }
+  thead th {
+    position:sticky; 
+    top:0; 
+    background:#f9fafb; 
+    text-align:left; 
+    font-weight:600; 
+    padding:12px;
+    border-bottom:1px solid #e5e7eb; 
+    z-index:1;
+  }
+  tbody td { 
+    padding:12px; 
+    border-bottom:1px solid #f1f5f9; 
+  }
+  tbody tr:nth-child(even) td { 
+    background:#fcfcfd; 
+  }
+  .chip { 
+    display:inline-block; 
+    padding:2px 8px; 
+    border-radius:999px; 
+    font-size:12px; 
+  }
+  .chip-current { 
+    background:#ecfdf5; 
+    color:#065f46; 
+    border:1px solid #a7f3d0; 
+  }

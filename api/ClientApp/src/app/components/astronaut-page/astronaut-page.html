@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="header">
+    <h1>Astronaut Duties</h1>
+    <div class="picker">
+      <label for="astronautSelect">Select astronaut</label>
+      <select id="astronautSelect" [(ngModel)]="selectedName" (change)="onSelectName()">
+        <option [ngValue]="''" disabled>Select…</option>
+        @for(p of people;track p){
+          <option [ngValue]="p.name">{{ p.name }}</option>
+        }
+      </select>
+    </div>
+  </div>
+  @if(loading){
+    <div class="state">Loading…</div>
+  }
+  @if(error){
+    <div class="state error">{{ error }}</div>
+  }
+  @if(person && !loading){
+    <div class="profile-card">
+      <div class="profile-top">
+        <h2 class="name">
+          {{ person.name }}
+          @if(person.astronautDetail?.currentRank){
+            <span class="badge">{{ person.astronautDetail?.currentRank }}</span>
+          }
+        </h2>
+        @if(person.astronautDetail?.currentDutyTitle){
+          <div class="subtitle">{{ person.astronautDetail?.currentDutyTitle }}</div>
+        }
+      </div>
+      <div class="meta">
+        @if(person){
+          <div><span>Career start:</span> {{ person.astronautDetail.careerStartDate | date:'mediumDate' }}</div>
+          @if(person.astronautDetail.careerEndDate){
+            <div><span>Career end:</span> {{ person.astronautDetail.careerEndDate | date:'mediumDate' }}</div>
+          }
+        }
+      </div>
+    </div>
+  }
+  @if(person && !loading){
+    <div class="table-wrap">
+      @if(duties?.length){
+        <table class="duty-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Duty Title</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(d of duties; track d){
+              <tr>
+                <td>{{ d.rank }}</td>
+                <td>{{ d.dutyTitle }}</td>
+                <td>{{ d.dutyStartDate | date:'mediumDate' }}</td>
+                <td>
+                  @if(d.dutyEndDate) {
+                    <span > {{ d.dutyEndDate | date:'mediumDate' }} </span>
+                  } 
+                  @else {
+                    <span class="chip chip-current">Current</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } 
+      @else {
+        <div class="state">No duties found for {{ person?.name }}.</div>
+      }
+    </div>
+  }
+</div>
