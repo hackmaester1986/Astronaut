@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Stargate.Repositories;
 using Stargate.Services;
-using StargateAPI.Business.Commands;
+using StargateAPI.Business.Data;
+using System.Diagnostics;
 using System.Net;
 
 namespace StargateAPI.Controllers
@@ -11,16 +13,28 @@ namespace StargateAPI.Controllers
     public class AstronautDutyController : ControllerBase
     {
         private readonly IAstronautDutyService _astronautDutyService;
-        public AstronautDutyController(IAstronautDutyService astronautDutyService)
+        private readonly IProcessLogRepository _logRepository;
+        public AstronautDutyController(IAstronautDutyService astronautDutyService, IProcessLogRepository processLogRepository)
         {
             _astronautDutyService = astronautDutyService;
+            _logRepository = processLogRepository;
         }
 
         [HttpGet("{name}")]
         public async Task<IActionResult> GetAstronautDutiesByName(string name)
         {
             var duties = await _astronautDutyService.GetDutiesByAstronautNameAsync(name);
-            return Ok();        
+            if (duties.Count() == 0)
+            {
+                await _logRepository.AddLogAsync(new ProcessLog
+                {
+                    Level = "WARNING",
+                    Message = $"There are no duties for {name}.",
+                    Context = "AstronautDutyController.GetDutiesByAstronautNameAsync"
+                });
+                return NotFound();
+            }
+            return Ok(duties);        
         }
 
         [HttpPost("")]
@@ -30,12 +44,20 @@ namespace StargateAPI.Controllers
             {
                 return BadRequest("Invalid request data.");
             }
-            bool success = await _astronautDutyService.AddAstronautDutyAsync(request.Name, request.DutyDescription);
-            if (!success)
+
+            var addedDuty = await _astronautDutyService.AddAstronautDutyAsync(request.Name, request.DutyDescription);
+            await _logRepository.AddLogAsync(new ProcessLog
+            {
+                Level = (addedDuty is not null)?"INFO":"ERROR",
+                Message = (addedDuty is not null)?$"Created {request.Name} successfully":$"Failed to create {request.Name}.",
+                Context = "AstronautDutyController.AddAstronautDutyAsync"
+            });
+
+            if (addedDuty is null)
             {
                 return BadRequest("Failed to add duty.");
             }
-            return Ok();
+            return Ok(addedDuty);
         }
     }
 }

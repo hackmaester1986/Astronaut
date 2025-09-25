@@ -4,7 +4,6 @@ using Stargate.Repositories.Impl;
 using Stargate.Services;
 using Stargate.Services.Impl;
 using StargateApi.Repositories;
-using StargateAPI.Business.Commands;
 using StargateAPI.Business.Data;
 using StargateAPI.Repositories.Impl;
 using StargateAPI.Services;
@@ -21,14 +20,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<StargateContext>(options => 
     options.UseSqlite(builder.Configuration.GetConnectionString("StarbaseApiDatabase")));
 
-/*builder.Services.AddMediatR(cfg =>
-{
-    cfg.AddRequestPreProcessor<CreateAstronautDutyPreProcessor>();
-    cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly);
-});*/
+
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IAstronautDutyRepository, AstronautDutyRepository>();
 builder.Services.AddScoped<IAstronautDetailRepository, AstronautDetailRepository>();
+builder.Services.AddScoped<IProcessLogRepository, ProcessLogRepository>();
 
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IAstronautDutyService, AstronautDutyService>();
@@ -46,7 +42,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 
 app.Run();

@@ -22,10 +22,10 @@ namespace Stargate.Services.Impl
             return await _personRepository.GetPersonByNameAsync(name);
         }
 
-        public async Task AddPersonAsync(string name)
+        public async Task<bool> AddPersonAsync(string name)
         {
             var person = new Person { Name = name };
-            await _personRepository.AddPersonAsync(person);
+            return await _personRepository.AddPersonAsync(person);
         }
     }
 }

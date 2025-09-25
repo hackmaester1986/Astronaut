@@ -3,12 +3,17 @@ import { CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PersonService } from '../../services/person-service';
 import { AstronautDutyService } from '../../services/atronaut-duty-service';
-import { AstronautDuty ,Person} from '../../interfaces/interfaces';
+import { AstronautDetailDto, AstronautDuty ,Person} from '../../interfaces/interfaces';
+import { AddDutyComponent } from '../add-duty/add-duty';
+import { forkJoin } from 'rxjs';
+import { AstronautDetailService } from '../../services/astronaut-detail-service';
+import { UpdateRank } from "../update-rank/update-rank";
+import { AstronautJob } from "../astronaut-job/astronaut-job";
 
 @Component({
   selector: 'app-astronaut-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AddDutyComponent, UpdateRank, AstronautJob],
   templateUrl: './astronaut-page.html',
   styleUrls: ['./astronaut-page.scss']
 })
@@ -17,12 +22,17 @@ export class AstronautDutyViewerComponent implements OnInit {
   selectedName = '';
   person: Person | null = null;
   duties: AstronautDuty[] = [];
+  detail:AstronautDetailDto | null = null;
   loading = false;
   error = '';
+  showModal = false;
+  showModalRank = false;
+  showModalJob = false;
 
   constructor(
     private personService: PersonService,
-    private dutyService: AstronautDutyService
+    private dutyService: AstronautDutyService,
+    private detailService: AstronautDetailService
   ) {}
 
   ngOnInit(): void {
@@ -33,13 +43,28 @@ export class AstronautDutyViewerComponent implements OnInit {
     this.error = '';
     this.personService.getPeople().subscribe({
       next: (res: any) => {
-        //const allPeople = Array.isArray(res) ? res as Person[] : (res?.people ?? [])
         const allPeople = res as Person[];
-        this.people = allPeople.filter(p => p.astronautDetail != null);
-        console.log(this.people);
+        this.people = res as Person[];
       },
-      error: (e) => this.error = 'Failed to load astronauts list.'
+      error: (e) => console.log('error')
     });
+  }
+
+  setDuties(data: any){
+    this.duties = data.duty;
+    this.detail = data.details;
+  }
+
+  setRank(data: any){
+    this.detail!.currentRank = data;
+  }
+
+  setDetail(){
+    this.detailService.getDetailByName(this.person!.name).subscribe(detail=>{
+      this.detail = detail;
+    },
+     error => console.log(error)
+    )
   }
 
   onSelectName(): void {
@@ -47,19 +72,43 @@ export class AstronautDutyViewerComponent implements OnInit {
     var any = this.people.filter(p => p.name === this.selectedName);
     if(any.length > 0){
       this.person = any[0];
-      this.duties = this.person?.astronautDuties ?? [];
+      this.detailService.getDetailByName(this.person.name).subscribe(detail=>{
+          this.detail = detail;
+          console.log(this.detail);
+          if(this.detail){
+            this.dutyService.getByPersonName(this.person!.name).subscribe(duties =>{
+              this.duties = duties;
+            },
+              error => {
+                this.duties = [];
+                console.log(error)
+              }
+            )
+          }
+          else{
+            this.detail = null;
+            this.duties = [];
+          }
+        },
+        error => {
+          this.detail = null;
+          this.duties = [];
+          console.log(error);
+        }
+      )
     }
     else{
       this.person = null; this.duties = []; return;
     }
-    //console.log(this.person);
-    /*this.dutyService.getByPersonName(this.selectedName).subscribe({
-      next: (res: GetAstronautDutiesByNameResult) => {
-        this.person = res?.person ?? null;
-        this.duties = res?.astronautDuties ?? [];
-        this.loading = false;
-      },
-      error: () => { this.error = 'Failed to load astronaut duties.'; this.loading = false; }
-    });*/
+  }
+
+  openModal(){
+    this.showModal = true;
+  }
+  openModalRank(){
+    this.showModalRank = true;
+  }
+  openModalJob(){
+    this.showModalJob = true;
   }
 }

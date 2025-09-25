@@ -11,9 +11,19 @@ namespace StargateAPI.Services.Impl
             _astronautDetailRepository = astronautDetailRepository;
         }
 
-        public async Task<bool> CreateAstronautDetail(string name, string rank, string title)
+        public async Task<bool> CreateAstronautDetail(string name, string rank, string title,DateTime? careerStartDate)
         {
-            return await _astronautDetailRepository.CreateAstronautDetail(name, rank, title);
+            return await _astronautDetailRepository.CreateAstronautDetail(name, rank, title,careerStartDate);
+        }
+
+        public async Task<bool> UpdateAstronautDetailAsync(AstronautDetailRequestDto updatedDetail)
+        {
+            return await _astronautDetailRepository.UpdateAstronautDetailAsync(updatedDetail);
+        }
+
+        public async Task<AstronautDetailDto> GetDetailByName(string name)
+        {
+            return await _astronautDetailRepository.GetDetailByName(name);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Stargate.Repositories;
 using Stargate.Services;
-using StargateAPI.Business.Commands;
 using StargateAPI.Business.Data;
 using System.Net;
 
@@ -13,9 +13,11 @@ namespace StargateAPI.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IPersonService _personService;
-        public PersonController(IPersonService personService)
-        {   
+        private readonly IProcessLogRepository _logRepository;
+        public PersonController(IPersonService personService, IProcessLogRepository processLogRepository)
+        {
             _personService = personService;
+            _logRepository = processLogRepository;
         }
 
         [HttpGet("")]
@@ -39,7 +41,15 @@ namespace StargateAPI.Controllers
         [HttpPost("")]
         public async Task<IActionResult> CreatePerson([FromBody] string name)
         {
-            await _personService.AddPersonAsync(name);
+            bool success = await _personService.AddPersonAsync(name);
+            await _logRepository.AddLogAsync(new ProcessLog
+            {
+                Level = success?"INFO":"ERROR",
+                Message = success ? $"Person {name} added successfully." : $"Failed to add person {name}.",
+                Context = "PersonController.CreatePerson"
+            });
+            if (!success) return BadRequest("Failed to add person");
+            
             return CreatedAtAction(nameof(GetPersonByName), new { name = name }, null);
 
         }

@@ -6,6 +6,6 @@ namespace Stargate.Services
     {
         Task<IEnumerable<Person>> GetAllPeopleAsync();
         Task<Person?> GetPersonByNameAsync(string name);
-        Task AddPersonAsync(string name);
+        Task<bool> AddPersonAsync(string name);
     }
 }

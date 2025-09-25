@@ -2,7 +2,7 @@
   <div class="header">
     <h1>Astronaut Duties</h1>
     <div class="picker">
-      <label for="astronautSelect">Select astronaut</label>
+      <label for="astronautSelect">Select person</label>
       <select id="astronautSelect" [(ngModel)]="selectedName" (change)="onSelectName()">
         <option [ngValue]="''" disabled>Select…</option>
         @for(p of people;track p){
@@ -17,30 +17,33 @@
   @if(error){
     <div class="state error">{{ error }}</div>
   }
-  @if(person && !loading){
+  @if(person && detail && !loading){
     <div class="profile-card">
       <div class="profile-top">
         <h2 class="name">
           {{ person.name }}
-          @if(person.astronautDetail?.currentRank){
-            <span class="badge">{{ person.astronautDetail?.currentRank }}</span>
+          @if(detail?.currentRank){
+            <span class="badge">{{ detail?.currentRank }}</span>
+            <button class="edit-btn" aria-label="Edit" (click)="openModalRank()">
+              <i class="bi bi-pencil"></i>
+            </button>
           }
         </h2>
-        @if(person.astronautDetail?.currentDutyTitle){
-          <div class="subtitle">{{ person.astronautDetail?.currentDutyTitle }}</div>
+        @if(detail?.currentDutyTitle){
+          <div class="subtitle">{{ detail?.currentDutyTitle }}</div>
         }
       </div>
       <div class="meta">
         @if(person){
-          <div><span>Career start:</span> {{ person.astronautDetail.careerStartDate | date:'mediumDate' }}</div>
-          @if(person.astronautDetail.careerEndDate){
-            <div><span>Career end:</span> {{ person.astronautDetail.careerEndDate | date:'mediumDate' }}</div>
+          <div><span>Career start:</span> {{ detail?.careerStartDate | date:'mediumDate' }}</div>
+          @if(detail.currentDutyTitle.toLowerCase() == 'retired'){
+            <div><span>Career end:</span> {{ detail?.careerEndDate | date:'mediumDate' }}</div>
           }
         }
       </div>
     </div>
   }
-  @if(person && !loading){
+  @if(person && detail && !loading){
     <div class="table-wrap">
       @if(duties?.length){
         <table class="duty-table">
@@ -74,6 +77,38 @@
       @else {
         <div class="state">No duties found for {{ person?.name }}.</div>
       }
+      @if(detail.currentDutyTitle.toLowerCase() != 'retired'){
+          <div class="add-duty-container">
+            <button class="add-duty-btn" (click)="openModal()">Add Duty</button>
+          </div>
+        }
     </div>
   }
+  @if(person && !detail && !loading){
+    <div class="state">No Astronaut Job found for {{ person?.name }}.</div>
+    <div class="add-duty-container">
+      <button class="add-duty-btn" (click)="openModalJob()">Create Job</button>
+    </div>
+  }
+  <app-add-duty 
+    [duties]="duties"
+    (refresh)="setDuties($event)" 
+    [person]="person" 
+    (close)="showModal = false" 
+    [showModal]="showModal">
+  </app-add-duty>
+  <app-update-rank 
+    (refresh)="setRank($event)" 
+    [detail]="detail"
+    [person]="person" 
+    (close)="showModalRank = false" 
+    [showModal]="showModalRank">
+  </app-update-rank>
+  <app-astronaut-job 
+    (refresh)="setDetail()" 
+    [person]="person" 
+    (close)="showModalJob = false" 
+    [showModal]="showModalJob">
+  </app-astronaut-job>
 </div>
+

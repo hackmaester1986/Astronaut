@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿/*using MediatR;
 using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
 using StargateAPI.Business.Data;
@@ -60,4 +60,4 @@ namespace StargateAPI.Business.Commands
     {
         public int Id { get; set; }
     }
-}
+}*/

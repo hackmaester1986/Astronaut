@@ -5,6 +5,6 @@ namespace Stargate.Repositories
     public interface IAstronautDutyRepository
     {
         Task<IEnumerable<AstronautDuty>> GetDutiesByAstronautNameAsync(string name);
-        Task AddAstronautDutyAsync(AstronautDuty duty);
+        Task<AstronautDuty> AddAstronautDutyAsync(AstronautDuty duty);
     }
 }

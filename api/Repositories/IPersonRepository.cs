@@ -5,6 +5,6 @@ namespace Stargate.Repositories
     {
         Task<IEnumerable<Person>> GetAllPeopleAsync();
         Task<Person?> GetPersonByNameAsync(string name);
-        Task AddPersonAsync(Person person);
+        Task<bool> AddPersonAsync(Person person);
     }
 }

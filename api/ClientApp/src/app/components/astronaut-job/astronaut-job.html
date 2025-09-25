@@ -1,0 +1,26 @@
+
+
+@if(showModal){
+    <div class="modal-backdrop">
+        <div class="modal-content">
+            <h2>Launch Career</h2>
+            <form (ngSubmit)="save()">
+                <label for="duty">Rank</label>
+                <input 
+                    type="text" 
+                    id="duty" 
+                    [(ngModel)]="newRank" 
+                    name="duty" 
+                    required
+                    placeholder="Enter duty title" />
+
+                <div class="modal-actions">
+                    <button type="submit" class="modal-btn">Save</button>
+                    <button type="button" class="modal-btn cancel" (click)="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+

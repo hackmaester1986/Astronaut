@@ -2,8 +2,8 @@
 export interface Person {
   id: number;
   name: string;
-  astronautDetail?: any;
-  astronautDuties?: AstronautDuty[]
+  //astronautDetail?: any;
+  //astronautDuties?: AstronautDuty[]
 }
 
 export interface AstronautDuty {
@@ -15,30 +15,25 @@ export interface AstronautDuty {
   dutyEndDate?: string | null;   // null or ISO string
 }
 
-/*export interface PersonAstronaut {
-  personId: number;
+export interface CreateAstronautDutyRequest {
   name: string;
-  currentRank?: string;
-  currentDutyTitle?: string;
-  careerStartDate?: string | null;
-  careerEndDate?: string | null;
-  astronautDetail?: any;
-  astronautDuties?: AstronautDuty[]
+  dutyDescription:string;
 }
-
-export interface BaseResponse {
-  success: boolean;
-  message?: string;
-  responseCode?: number;
-}
-
-export interface GetAstronautDutiesByNameResult extends BaseResponse {
-  person: PersonAstronaut | null;
-  astronautDuties: AstronautDuty[];
-}*/
 
 export interface CreateAstronautDetailRequest {
   name: string;
+  currentRank: string;
+  currentDutyTitle: string;
+}
+export interface CreateNewAstronautRequest {
+  name: string;
   rank: string;
-  title: string;
+  careerStartDate: string;
+}
+export interface AstronautDetailDto{
+  name:string;
+  currentRank:string;
+  currentDutyTitle:string;
+  careerStartDate:Date;
+  careerEndDate:Date | null;
 }

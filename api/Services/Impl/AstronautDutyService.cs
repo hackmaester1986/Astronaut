@@ -20,10 +20,10 @@ namespace Stargate.Services.Impl
             return await _astronautDutyRepository.GetDutiesByAstronautNameAsync(name);
         }
 
-        public async Task<bool> AddAstronautDutyAsync(string name, string dutyDescription)
+        public async Task<AstronautDuty> AddAstronautDutyAsync(string name, string dutyDescription)
         {
             Person? person = await _personRepository.GetPersonByNameAsync(name);
-            if (person == null || person.AstronautDetail == null) return false;
+            if (person == null || person.AstronautDetail == null) return null;
             var duty = new AstronautDuty
             {
                 PersonId = person.Id,
@@ -31,8 +31,8 @@ namespace Stargate.Services.Impl
                 DutyTitle = dutyDescription,
                 DutyStartDate = DateTime.UtcNow,
             };
-            await _astronautDutyRepository.AddAstronautDutyAsync(duty);
-            return true;
+            var addedDuty = await _astronautDutyRepository.AddAstronautDutyAsync(duty);
+            return addedDuty;
         }
     }
 }
