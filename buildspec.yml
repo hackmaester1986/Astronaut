@@ -19,26 +19,26 @@ phases:
       - cd ..
 
       - echo "Publishing .NET API..."
-      - dotnet publish StargateAPI.csproj -c Release -o publish
+      - dotnet publish StargateAPI.csproj -c Release -o ./publish
 
-      - echo "Copying Angular build into publish/wwwroot..."
+      - echo "Copying Angular DIST to publish/wwwroot..."
       - mkdir -p publish/wwwroot
       - cp -r ClientApp/dist/ClientApp/* publish/wwwroot/
 
       - echo "Copying SQLite DB..."
       - cp starbase.db publish/
 
-      - echo "Removing Angular source..."
+      - echo "Removing Angular source folder..."
       - rm -rf publish/ClientApp
 
       - cd ..
 
   post_build:
     commands:
-      - echo "Zipping final artifact..."
+      - echo "Creating deploy.zip..."
       - cd api/publish
-      - zip -r ../../../deploy.zip .
-      - cd ../../..
+      - zip -r ../../deploy.zip .
+      - cd ../..
       - ls -R .
 
 artifacts:
