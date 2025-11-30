@@ -19,4 +19,29 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- Install Node dependencies -->
+    <Exec Command="npm install" WorkingDirectory="ClientApp" />
+
+    <!-- Build Angular production build -->
+    <Exec Command="npm run build -- --configuration production" WorkingDirectory="ClientApp" />
+
+    <!-- Copy Angular output to wwwroot -->
+    <ItemGroup>
+      <AngularDistFiles Include="ClientApp\dist\**\*" />
+      <ResolvedFileToPublish Include="@(AngularDistFiles)" Exclude="@(ResolvedFileToPublish)">
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <RelativePath>wwwroot\%(Filename)%(Extension)</RelativePath>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+<ItemGroup>
+  <Content Include="starbase.db">
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
 </Project>
+
+
+

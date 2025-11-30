@@ -1,0 +1,31 @@
+
+
+# Build artifacts
+bin/
+obj/
+publish/
+runtimes/
+
+# Angular Node folders
+ClientApp/node_modules/
+ClientApp/dist/
+ClientApp/.angular/
+
+# Cache files
+*.cache
+*.dswa.cache.json
+*.dwa.cache.json
+
+# .NET temp/debug files
+*.dll
+*.pdb
+*.exe
+*.json.cache
+*.FileListAbsolute.txt
+
+# User/IDE specific
+.vscode/
+.vs/
+
+# SQLite database (optional)
+*.db

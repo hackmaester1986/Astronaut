@@ -39,11 +39,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseDefaultFiles();  // looks for index.html
+app.UseStaticFiles();
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
+
+app.MapFallbackToFile("index.html");  
 
 app.Run();
 
