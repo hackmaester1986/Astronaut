@@ -2,33 +2,60 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      dotnet: 8.0
-      nodejs: 20
     commands:
-      - echo "Installing dependencies..."
+      - echo "===== INSTALL PHASE ====="
+      - echo "Using global.json SDK version:"
+      - cat global.json || echo "No global.json found"
+
+      # ---------------------------
+      # Install .NET 8 Manually
+      # ---------------------------
+      - echo "Installing .NET 8 SDK manually..."
+      - wget https://download.visualstudio.microsoft.com/download/pr/6dfdd5c0-ff89-481e-ba5b-bddb5a0a67e9/4103e3c20e658af266fd5fc0ae6b04d0/dotnet-sdk-8.0.100-linux-x64.tar.gz -O dotnet.tar.gz
+      - mkdir -p $HOME/dotnet
+      - tar -zxf dotnet.tar.gz -C $HOME/dotnet
+      - export DOTNET_ROOT=$HOME/dotnet
+      - export PATH=$PATH:$HOME/dotnet
+
+      - echo "Verifying installed .NET version:"
+      - dotnet --version
+
+      # ---------------------------
+      # Install Node dependencies
+      # ---------------------------
+      - echo "Installing Node.js dependencies..."
       - cd api/ClientApp
       - npm install
       - cd ../..
 
   build:
     commands:
+      - echo "===== BUILD PHASE ====="
+
+      # ---------------------------
+      # Angular Build
+      # ---------------------------
       - echo "Building Angular..."
       - cd api/ClientApp
       - npm run build -- --configuration production
       - cd ../..
 
+      # ---------------------------
+      # Publish .NET API
+      # ---------------------------
       - echo "Publishing .NET API..."
-      - cd api
-      - dotnet publish -c Release -o publish
-      - cd ..
+      - dotnet publish api/StargateAPI.csproj -c Release -o api/publish
 
-      - echo "Copying Angular build output into API publish folder..."
+      # ---------------------------
+      # Copy Angular dist -> API
+      # ---------------------------
+      - echo "Copying Angular build output..."
       - mkdir -p api/publish/wwwroot
       - cp -R api/ClientApp/dist/ClientApp/* api/publish/wwwroot/
 
   post_build:
     commands:
+      - echo "===== POST_BUILD ====="
       - echo "Creating deploy.zip..."
       - zip -r deploy.zip api/publish
 
