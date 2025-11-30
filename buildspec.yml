@@ -6,6 +6,9 @@ phases:
       dotnet: 8.0
       nodejs: 20
     commands:
+      - echo "=== PRINTING DIRECTORY TREE ==="
+      - ls -R .
+      - echo "=== END DIRECTORY TREE ==="
       - echo "Installing Angular dependencies..."
       - cd api/ClientApp
       - npm install
