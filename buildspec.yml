@@ -6,60 +6,32 @@ phases:
       dotnet: 8.0
       nodejs: 20
     commands:
-      - echo "===== INSTALL PHASE ====="
-      - echo "PWD BEFORE ANYTHING:"
-      - pwd
-      - echo "Listing root:"
-      - ls -la .
-      - echo "----- cd api/ClientApp -----"
+      - echo "Installing dependencies..."
       - cd api/ClientApp
-      - echo "PWD after cd api/ClientApp:"
-      - pwd
-      - ls -la .
-      - echo "----- npm install -----"
       - npm install
-      - echo "PWD AFTER npm install:"
-      - pwd
-      - ls -la .
-      - echo "----- cd ../.. -----"
       - cd ../..
-      - echo "PWD after cd ../..:"
-      - pwd
-      - ls -la .
 
   build:
     commands:
-      - echo "===== BUILD PHASE ====="
-      - echo "PWD at START of build phase:"
-      - pwd
-      - ls -la .
-      - echo "----- cd api/ClientApp -----"
+      - echo "Building Angular..."
       - cd api/ClientApp
-      - echo "PWD after cd api/ClientApp:"
-      - pwd
-      - ls -la .
-      - echo "----- npm run build -----"
       - npm run build -- --configuration production
-      - echo "PWD AFTER npm run build:"
-      - pwd
-      - ls -la .
-      - echo "----- cd .. -----"
+      - cd ../..
+
+      - echo "Publishing .NET API..."
+      - cd api
+      - dotnet publish -c Release -o publish
       - cd ..
-      - echo "PWD after cd ..:"
-      - pwd
-      - ls -la .
-      - echo "----- cd .. again to check behavior -----"
-      - cd ..
-      - echo "PWD after second cd ..:"
-      - pwd
-      - ls -la .
+
+      - echo "Copying Angular build output into API publish folder..."
+      - mkdir -p api/publish/wwwroot
+      - cp -R api/ClientApp/dist/ClientApp/* api/publish/wwwroot/
 
   post_build:
     commands:
-      - echo "===== POST_BUILD PHASE ====="
-      - echo "PWD in post_build:"
-      - pwd
-      - ls -la .
+      - echo "Creating deploy.zip..."
+      - zip -r deploy.zip api/publish
+
 artifacts:
   files:
     - deploy.zip
