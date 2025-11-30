@@ -19,19 +19,19 @@ phases:
       - cd ..
 
       - echo "Publishing .NET API..."
+      - cd api
       - dotnet publish StargateAPI.csproj -c Release -o ./publish
+      - cd ..
 
       - echo "Copying Angular DIST to publish/wwwroot..."
-      - mkdir -p publish/wwwroot
-      - cp -r ClientApp/dist/ClientApp/* publish/wwwroot/
+      - mkdir -p api/publish/wwwroot
+      - cp -r api/ClientApp/dist/ClientApp/* api/publish/wwwroot/
 
       - echo "Copying SQLite DB..."
-      - cp starbase.db publish/
+      - cp api/starbase.db api/publish/
 
-      - echo "Removing Angular source folder..."
-      - rm -rf publish/ClientApp
-
-      - cd ..
+      - echo "Cleaning ClientApp from publish folder..."
+      - rm -rf api/publish/ClientApp
 
   post_build:
     commands:
