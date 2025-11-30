@@ -6,44 +6,57 @@ phases:
       dotnet: 8.0
       nodejs: 20
     commands:
-      - echo "=== PRINTING DIRECTORY TREE ==="
-      - ls -R .
-      - echo "=== END DIRECTORY TREE ==="
-      - echo "Installing Angular dependencies..."
+      - echo "===== INSTALL PHASE ====="
+      - echo "PWD BEFORE ANYTHING:"
+      - pwd
+      - echo "Listing root:"
+      - ls -la .
+      - echo "----- cd api/ClientApp -----"
       - cd api/ClientApp
+      - echo "PWD after cd api/ClientApp:"
+      - pwd
+      - ls -la .
+      - echo "----- npm install -----"
       - npm install
+      - echo "PWD AFTER npm install:"
+      - pwd
+      - ls -la .
+      - echo "----- cd ../.. -----"
       - cd ../..
+      - echo "PWD after cd ../..:"
+      - pwd
+      - ls -la .
 
   build:
     commands:
-      - echo "Building Angular..."
+      - echo "===== BUILD PHASE ====="
+      - echo "PWD at START of build phase:"
+      - pwd
+      - ls -la .
+      - echo "----- cd api/ClientApp -----"
       - cd api/ClientApp
+      - echo "PWD after cd api/ClientApp:"
+      - pwd
+      - ls -la .
+      - echo "----- npm run build -----"
       - npm run build -- --configuration production
+      - echo "PWD AFTER npm run build:"
+      - pwd
+      - ls -la .
+      - echo "----- cd .. -----"
       - cd ..
-
-      - echo "Publishing .NET API..."
-      - cd api
-      - dotnet publish StargateAPI.csproj -c Release -o ./publish
+      - echo "PWD after cd ..:"
+      - pwd
+      - ls -la .
+      - echo "----- cd .. again to check behavior -----"
       - cd ..
-
-      - echo "Copying Angular DIST to publish/wwwroot..."
-      - mkdir -p api/publish/wwwroot
-      - cp -r api/ClientApp/dist/ClientApp/* api/publish/wwwroot/
-
-      - echo "Copying SQLite DB..."
-      - cp api/starbase.db api/publish/
-
-      - echo "Cleaning ClientApp from publish folder..."
-      - rm -rf api/publish/ClientApp
+      - echo "PWD after second cd ..:"
+      - pwd
+      - ls -la .
 
   post_build:
     commands:
-      - echo "Creating deploy.zip..."
-      - cd api/publish
-      - zip -r ../../deploy.zip .
-      - cd ../..
-      - ls -R .
-
-artifacts:
-  files:
-    - deploy.zip
+      - echo "===== POST_BUILD PHASE ====="
+      - echo "PWD in post_build:"
+      - pwd
+      - ls -la .
