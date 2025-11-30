@@ -60,3 +60,6 @@ phases:
       - echo "PWD in post_build:"
       - pwd
       - ls -la .
+artifacts:
+  files:
+    - deploy.zip
