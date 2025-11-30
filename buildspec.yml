@@ -1,0 +1,46 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 8.0
+      nodejs: 20
+    commands:
+      - echo "Installing Angular dependencies..."
+      - cd api/ClientApp
+      - npm install
+      - cd ../..
+
+  build:
+    commands:
+      - echo "Building Angular..."
+      - cd api/ClientApp
+      - npm run build -- --configuration production
+      - cd ..
+
+      - echo "Publishing .NET API..."
+      - dotnet publish StargateAPI.csproj -c Release -o publish
+
+      - echo "Copying Angular build into publish/wwwroot..."
+      - mkdir -p publish/wwwroot
+      - cp -r ClientApp/dist/ClientApp/* publish/wwwroot/
+
+      - echo "Copying SQLite DB..."
+      - cp starbase.db publish/
+
+      - echo "Removing Angular source..."
+      - rm -rf publish/ClientApp
+
+      - cd ..
+
+  post_build:
+    commands:
+      - echo "Zipping final artifact..."
+      - cd api/publish
+      - zip -r ../../../deploy.zip .
+      - cd ../../..
+      - ls -R .
+
+artifacts:
+  files:
+    - deploy.zip
