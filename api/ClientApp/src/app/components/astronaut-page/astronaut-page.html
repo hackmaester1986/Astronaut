@@ -2,7 +2,7 @@
   <div class="header">
     <h1>Astronaut Duties</h1>
     <div class="picker">
-      <label for="astronautSelect">Select sastronaut</label>
+      <label for="astronautSelect">Selects sastronaut</label>
       <select id="astronautSelect" [(ngModel)]="selectedName" (change)="onSelectName()">
         <option [ngValue]="''" disabled>Select…</option>
         @for(p of people;track p){
