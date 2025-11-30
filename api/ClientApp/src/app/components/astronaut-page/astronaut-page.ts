@@ -46,7 +46,7 @@ export class AstronautDutyViewerComponent implements OnInit {
         const allPeople = res as Person[];
         this.people = res as Person[];
       },
-      error: (e) => console.log('error')
+      error: (e) => console.log(e)
     });
   }
 

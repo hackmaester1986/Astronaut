@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "p1n6r/S064k=",
+  "dgSpecHash": "2d3GTPOREKM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\BryanGermain\\Projects\\Astronaut\\astronaut\\api\\StargateAPI.csproj",
+  "projectFilePath": "c:\\Users\\BryanGermain\\AWS_Project\\Astronaut\\api\\StargateAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\BryanGermain\\.nuget\\packages\\dapper\\2.1.35\\dapper.2.1.35.nupkg.sha512",
     "C:\\Users\\BryanGermain\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
