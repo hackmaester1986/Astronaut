@@ -35,11 +35,10 @@ phases:
   post_build:
     commands:
       - cd api/publish
-      - zip -r ../../deploy.zip .
+      - zip -r ../../deploy.zip *
       - cd ../..
 
 
 artifacts:
-  base-directory: .
   files:
     - deploy.zip
