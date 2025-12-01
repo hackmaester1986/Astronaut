@@ -28,6 +28,7 @@ phases:
       - dotnet publish api/StargateAPI.csproj -c Release -o api/publish
 
       - echo "Copying Angular output to API wwwroot..."
+      - rm -rf api/publish/ClientApp   
       - mkdir -p api/publish/wwwroot
       - cp -R api/ClientApp/dist/ClientApp/* api/publish/wwwroot/
 
