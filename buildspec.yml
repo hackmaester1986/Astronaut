@@ -40,5 +40,6 @@ phases:
 
 
 artifacts:
+  base-directory: .
   files:
     - deploy.zip
