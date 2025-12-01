@@ -34,8 +34,10 @@ phases:
 
   post_build:
     commands:
-      - echo "===== POST_BUILD ====="
-      - zip -r deploy.zip api/publish
+      - cd api/publish
+      - zip -r ../../deploy.zip .
+      - cd ../..
+
 
 artifacts:
   files:
