@@ -74,7 +74,7 @@
             },
             "SQLitePCLRaw.bundle_e_sqlite3": {
               "target": "Package",
-              "version": "[2.1.5, )"
+              "version": "[2.1.6, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
