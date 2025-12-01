@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "SM0yK6B4dH8=",
-  "success": true,
+  "dgSpecHash": "SJtqr3/U/7U=",
+  "success": false,
   "projectFilePath": "C:\\Users\\BryanGermain\\AWS_Project\\Astronaut\\UnitTests\\UnitTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\BryanGermain\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
@@ -111,10 +111,10 @@
     "C:\\Users\\BryanGermain\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\BryanGermain\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\BryanGermain\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
-    "C:\\Users\\BryanGermain\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.6\\sqlitepclraw.bundle_e_sqlite3.2.1.6.nupkg.sha512",
+    "C:\\Users\\BryanGermain\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.5\\sqlitepclraw.bundle_e_sqlite3.2.1.5.nupkg.sha512",
     "C:\\Users\\BryanGermain\\.nuget\\packages\\sqlitepclraw.core\\2.1.6\\sqlitepclraw.core.2.1.6.nupkg.sha512",
-    "C:\\Users\\BryanGermain\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.6\\sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512",
-    "C:\\Users\\BryanGermain\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.6\\sqlitepclraw.provider.e_sqlite3.2.1.6.nupkg.sha512",
+    "C:\\Users\\BryanGermain\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.5\\sqlitepclraw.lib.e_sqlite3.2.1.5.nupkg.sha512",
+    "C:\\Users\\BryanGermain\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.5\\sqlitepclraw.provider.e_sqlite3.2.1.5.nupkg.sha512",
     "C:\\Users\\BryanGermain\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\BryanGermain\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\BryanGermain\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
@@ -195,5 +195,17 @@
     "C:\\Users\\BryanGermain\\.nuget\\packages\\xunit.extensibility.execution\\2.9.3\\xunit.extensibility.execution.2.9.3.nupkg.sha512",
     "C:\\Users\\BryanGermain\\.nuget\\packages\\xunit.runner.visualstudio\\3.1.4\\xunit.runner.visualstudio.3.1.4.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: SQLitePCLRaw.bundle_e_sqlite3 from 2.1.6 to 2.1.5. Reference the package directly from the project to select a different version. \r\n UnitTests -> StargateAPI -> Microsoft.EntityFrameworkCore.Sqlite 8.0.4 -> SQLitePCLRaw.bundle_e_sqlite3 (>= 2.1.6) \r\n UnitTests -> StargateAPI -> SQLitePCLRaw.bundle_e_sqlite3 (>= 2.1.5)",
+      "projectPath": "C:\\Users\\BryanGermain\\AWS_Project\\Astronaut\\UnitTests\\UnitTests.csproj",
+      "filePath": "C:\\Users\\BryanGermain\\AWS_Project\\Astronaut\\UnitTests\\UnitTests.csproj",
+      "libraryId": "SQLitePCLRaw.bundle_e_sqlite3",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
 }
