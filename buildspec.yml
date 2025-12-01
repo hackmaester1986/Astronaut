@@ -25,7 +25,7 @@ phases:
       - cd ../..
 
       - echo "Publishing .NET API..."
-      - dotnet publish api/StargateAPI.csproj -c Release -o api/publish
+      - dotnet publish api/StargateAPI.csproj --configuration Release --runtime linux-x64 --self-contained false --output api/publish
 
       - echo "Copying Angular output to API wwwroot..."
       - rm -rf api/publish/ClientApp   
