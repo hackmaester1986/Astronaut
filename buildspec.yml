@@ -32,8 +32,8 @@ phases:
       - mkdir -p api/publish/wwwroot
       - cp -R api/ClientApp/dist/ClientApp/* api/publish/wwwroot/
 
-
 artifacts:
+  base-directory: api/publish
   files:
-    - api/publish/**/*
+    - '**/*'
   discard-paths: no
