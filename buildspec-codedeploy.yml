@@ -1,6 +1,19 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      dotnet: 8.0
+      nodejs: 20
+    commands:
+      - echo "===== INSTALL PHASE ====="
+      - echo "Using global.json:"
+      - cat global.json || echo "No global.json found"
+
+      - echo "Installing Angular dependencies..."
+      - cd api/ClientApp
+      - npm install
+      - cd ../..
   build:
     commands:
       - echo "Publishing StargateAPI for CodeDeploy..."
